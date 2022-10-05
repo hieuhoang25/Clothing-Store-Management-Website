@@ -1,0 +1,44 @@
+type Query{
+    colors: [Color]
+    categories: [Category]
+    tags: [Tag]
+    sizes: [Size]
+    products:[Product]
+}
+type Color{
+    id:ID!
+    name:String
+    decode:String
+}
+type Category{
+    id:ID!
+    name:String
+}
+type Tag{
+    id:ID!
+    name:String
+}
+type Size{
+    id:ID!
+    name:String
+}
+type Product{
+  id:ID!
+  name:String
+  price: Float
+    discount:String
+    description:String
+    createDate: String
+    mainImage: String
+    product_sizes:[Product_Sizes]
+    product_colors:[Product_Colors]
+    category: Category
+}
+type Product_Sizes{
+    size:Size
+    quality:Int
+}
+type Product_Colors{
+    color:Color
+    image:String
+}

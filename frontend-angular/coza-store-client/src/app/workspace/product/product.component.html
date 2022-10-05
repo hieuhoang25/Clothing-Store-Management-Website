@@ -1,0 +1,314 @@
+<div class="container-fluid" id="main-container">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Products</h1>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div
+      class="card-header py-3 d-flex flex-row align-items-center justify-content-between"
+    >
+      <select class="form-select" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <button
+        (click)="onOpenModal(null, 'add')"
+        type="button"
+        class="btn btn-info btn-circle mx-1"
+      >
+        <i class="fas fa-plus"></i>
+      </button>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table
+          class="table table-bordered text-center"
+          width="100%"
+          cellspacing="0"
+        >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Discount</th>
+              <th>Description</th>
+              <th>Create Date</th>
+              <th>Size</th>
+              <th>Color</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngFor="let p of products">
+              <td>{{ p.name }}</td>
+              <td>{{ p.price }}</td>
+              <td>{{ p.discount }}</td>
+              <td>{{ p.description }}</td>
+              <td>{{ p.createDate }}</td>
+              <td>
+                <button
+                  *ngFor="let ps of p.product_sizes"
+                  type="button"
+                  class="btn btn-info"
+                >
+                  {{ ps.size.name }}
+                  <span class="badge badge-light">{{ ps.quality }}</span>
+                </button>
+              </td>
+              <td>
+                <span
+                  class="badge badge-primary"
+                  [style.background-color]="pc.color.decode"
+                  *ngFor="let pc of p.product_colors"
+                  >{{ pc.color.name }}</span
+                >
+              </td>
+
+              <td>
+                <button
+                  (click)="onOpenModal(p.id, 'delete')"
+                  type="button"
+                  class="btn btn-danger btn-circle mx-1"
+                >
+                  <i class="fas fa-trash"></i>
+                </button>
+                <button
+                  (click)="onOpenModal(p.id, 'edit')"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  class="btn btn-primary btn-circle mx-1"
+                >
+                  <i class="fas fa-pen"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+<!-- Model add new -->
+<div
+  class="modal fade"
+  id="addProductModel"
+  role="dialog"
+  tabindex="-1"
+  aria-labelledby="addProductModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addProductModel">New Product</h5>
+        <button
+          type="button"
+          class="btn btn-danger btn-circle"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="">
+          <label for="">Category</label>
+          <select class="custom-select">
+            <option [value]="c" *ngFor="let c of categories">
+              {{ c.name }}
+            </option>
+          </select>
+          <div class="form-group">
+            <label for="nameProduct">Name</label>
+            <input type="text" class="form-control" id="nameProduct" />
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1">Description</label>
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              rows="3"
+            ></textarea>
+          </div>
+          <div class="form-group">
+            <label for="priceProduct">Price</label>
+            <input type="number" class="form-control" id="priceProduct" />
+          </div>
+          <div class="form-group">
+            <label for="discountProduct">Discount</label>
+            <input type="number" class="form-control" id="discountProduct" />
+          </div>
+          <div class="form-group">
+            <div class="row align-items-center ">
+              <div class="col-2">
+                <label for="discountProduct">Size</label>
+              </div>
+              <div class="col-5">
+                <select class="form-control" #sizeofproduct>
+                  <option [value]="s.id" *ngFor="let s of sizes">
+                    {{s.name}}
+                  </option>
+                </select>
+              </div>
+              <div class="col-3">
+                <input type="number" #qualityofproduct class="form-control" id="exampleFormControlInput1" placeholder="Quality">
+              </div>
+              <div class="col-2">
+                <button
+                type="button"
+                class="btn btn-info btn-circle mx-1"
+                (click)="newSizeForProduct(sizeofproduct,qualityofproduct)"
+              >
+                <i class="fas fa-plus"></i>
+              </button>
+              </div>
+            </div>
+            <div class="d-flex mt-2" id="sizeforproduct">
+              
+
+              <button  type="button" class="btn btn-info mx-1" *ngFor="let ps of product_sizes">
+                {{ps.size.name}} <span class="badge badge-light">{{ps.quality}}</span>
+              </button>
+
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="row align-items-center ">
+              <div class="col-2">
+                <label for="discountProduct">Color</label>
+              </div>
+              <div class="col-5">
+                <select class="form-control" #colorofproduct>
+                  <option [value] = "c.id" *ngFor="let c of colors">{{c.name}}</option>
+                </select>
+              </div>
+              <div class="col-3">
+                <label for="file-upload" class="custom-file-upload m-0">
+                  <i class="fas fa-upload"></i> Upload
+              </label>
+              <input id="file-upload" #fileofcolor type="file" (change)="selectFile($event)"/>
+              </div>
+              <div class="col-2">
+                <button
+                type="button"
+                class="btn btn-info btn-circle mx-1"
+                (click)="newColorForProduct(colorofproduct,fileofcolor)"
+              >
+                <i class="fas fa-plus"></i>
+              </button>
+              </div>
+            </div>
+            
+
+            <div class="d-flex mt-2" id="colorforproduct">
+              <a href="#" class="badge text-black mx-1" [style.background-color]="pc.color.decode" *ngFor="let pc of product_colors">{{pc.color.name}}</a>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="priceProduct" class="mb-1">Tags</label>
+            <br>
+            <div class="form-check form-check-inline" *ngFor="let t of tags">
+              <input class="form-check-input" type="checkbox" id="{{t.id}}" [value]="t" >
+              <label class="form-check-label" for="{{t.id}}">{{t.name}}</label>
+            </div>
+          </div>
+        </form>
+
+        <!-- <div class="row">
+            <div class="col-8">
+              <label class="btn btn-default p-0">
+                <input type="file" (change)="selectFile($event)" />
+              </label>
+            </div>
+          
+            <div class="col-4">
+              <button class="btn btn-success btn-sm" [disabled]="!selectedFiles" (click)="upload()">
+                Upload
+              </button>
+            </div>
+          </div> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.model add new -->
+<!-- Model add new -->
+<div
+  class="modal fade"
+  id="updateProductModel"
+  role="dialog"
+  tabindex="-1"
+  aria-labelledby="updateProductModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+        <button
+          type="button"
+          class="btn btn-danger btn-circle"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.model add new -->
+<!-- Model add new -->
+<div
+  class="modal fade"
+  id="deleteProductModel"
+  role="dialog"
+  tabindex="-1"
+  aria-labelledby="deleteProductModel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Question ?</h5>
+        <button
+          type="button"
+          class="btn btn-danger btn-circle"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        >
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">Do you want to delete this item ?</div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="delete(idDelete)"
+        >
+          Yes!
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.model add new -->

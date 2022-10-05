@@ -1,0 +1,238 @@
+<div class="container-fluid">
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <simple-notifications></simple-notifications>
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add New</h5>
+              <button type="button" class="btn btn-danger btn-circle" data-bs-dismiss="modal" aria-label="Close" (click) = "clear()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+                <form  #frm1="ngForm" >
+                    <div class="mb-3">
+                        <label for="" class="form-label">Please enter {{type}} name</label>
+                        <input [(ngModel)]="nameOfType" type="text" #loiun="ngModel" required minlength="1" maxlength="10"
+                          class="form-control" name="nameOfType" id="" aria-describedby="helpId" placeholder="name">
+                     
+                      </div>
+                </form>
+                    
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" [disabled]="loiun.invalid"  (click)="addNew(type)">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Category</h1>
+      
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Question ?</h5>
+              <button type="button" class="btn btn-danger btn-circle" data-bs-dismiss="modal" aria-label="Close">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="modal-body">
+              Do you want to delete {{input.type}} : {{input.name}} ?
+            </div>
+            <div class="modal-footer">
+              
+              <button (click) = "delete(input.type, input.id)" type="button" class="btn btn-primary"  data-bs-dismiss="modal" >OK!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+       
+        <div class="col-xl-6 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Category</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Control</div>
+                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="" (click)="showNewPopup('category')" >New Category</a>
+                            <!-- <a class="dropdown-item" href="#">Delete All</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Something else here</a> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" >
+                    <div class="div" class="scrollbar" >
+                        <ul class="list-group border border-0 " >
+                            <li *ngFor="let c of categories " class="list-group-item d-flex align-items-center justify-content-between">
+                                <a href="">
+                                    <i class="fas fa-voicemail"></i>
+                                    {{c.name}}</a>
+                                <button type="button" (click)="showPopup('category',c.id, c.name)" class="btn btn-danger btn-circle" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </li>
+                           </ul>
+                           
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-6 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Tag</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="" (click)="showNewPopup('tag')" >New Tag</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" >
+                    <div class="div" class="scrollbar" >
+                        <ul class="list-group border border-0 " >
+                            <li *ngFor="let t of tags" class="list-group-item d-flex align-items-center justify-content-between">
+                                <a href="">
+                                    <i class="fas fa-hashtag"></i>
+                                    {{t.name}}</a>
+                                    <button type="button" (click)="showPopup('tag',t.id, t.name)" class="btn btn-danger btn-circle" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                            </li>
+                           </ul>
+                           
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Content Column -->
+        <div class="col-lg-6 mb-4">
+            <!-- Project Card Example -->
+            <div class="card shadow mb-4">
+                <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Size</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="" (click)="showNewPopup('size')" >New Size</a>
+                    </div>
+                </div>
+            </div>
+                <div class="card-body" >
+                    <div class="div" class="scrollbar" >
+                        <ul class="list-group border border-0 " >
+                            <li *ngFor="let s of sizes" class="list-group-item d-flex align-items-center justify-content-between">
+                                <a href="">
+                                    <i class="fas fa-tshirt"></i>
+                                    {{s.name}}</a>
+                                    <button type="button" (click)="showPopup('size',s.id, s.name)" class="btn btn-danger btn-circle" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                            </li>
+                           </ul>
+                           
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow mb-4">
+                <div
+                class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Color</h6>
+                <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                        aria-labelledby="dropdownMenuLink">
+                        <div class="dropdown-header">Dropdown Header:</div>
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </div>
+            </div>
+                <div class="card-body" >
+                    
+
+                        <div class="row justify-content-center bg-white scrollbar">
+                            <div class="col-lg-5 mb-4" *ngFor="let c of colors">
+                                <div class="card  {{c.decode=='#FFFFFF' ? 'text-black':'text-white'}}  shadow" [style.backgroundColor]="c.decode">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="">
+                                                {{c.name}} 
+                                                <div class="small {{c.decode=='#FFFFFF' ? 'text-black-50':'text-white-50'}}">{{c.decode}}</div>
+                                   
+                                            </div>
+                                            <button type="button" style="background-color: transparent;
+                                            background-repeat: no-repeat;
+                                            border: none;
+                                            cursor: pointer;
+                                            overflow: hidden;
+                                            outline: none;" (click)="showPopup('color',c.id, c.name)" class="{{c.decode=='#FFFFFF' ? 'text-black':'text-white'}}" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                            
+                                         
+                                        </div>
+                                         </div>
+                                </div>
+                            </div>
+                        </div>
+                
+                </div>
+            </div>
+    
+        </div>
+    </div>
+
+</div>
+

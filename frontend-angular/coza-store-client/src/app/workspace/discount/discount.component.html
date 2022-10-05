@@ -1,0 +1,139 @@
+<div class="container-fluid">
+   
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+      
+            <form action="" #frm1="ngForm" (ngSubmit)="save(frm1.value,type)">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">{{type}} Coupon/Discount</h5>
+                   
+                      <button type="button" (click)="clear()" class="btn btn-danger btn-circle" data-bs-dismiss="modal" aria-label="Close">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                    
+                            <p><label>Name/Code <span style="color:red">*</span></label>
+                               <input name="name" [(ngModel)]="name" required maxlength="10" minlength="6" class="form-control" type="text" placeholder="Length of name/code from 6 to 10"> 
+                               
+                            </p>
+                            <p><label>Discount(%) <span style="color:red">*</span></label>
+                               <input name="discount" [(ngModel)]="discount" required min="0" max="100" class="form-control" type="number" placeholder="Discount from 0% to 100%"> 
+                            </p>
+                            <p><label>Expiration Date <span style="color:red">*</span></label>
+                                <input name="exp" [(ngModel)]="exp" class="form-control" required type="datetime-local" placeholder="Expiration Date less than now"> 
+                             </p>
+                            <p> 
+                            
+                    </div>
+                    <div class="modal-footer">
+              
+                      <button type="submit" [disabled]="frm1.invalid" class="btn btn-primary" data-bs-dismiss="modal">Save!</button>
+                    </div>
+                  </div>
+            </form>
+        </div>
+      </div>
+
+
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Voucher/Discount</h1>
+      
+    </div>
+
+    <!-- Content Row -->
+
+    <div class="row">
+
+       
+        <div class="col-xl-7 col-lg-7">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Voucher/Discount Code</h6>
+                    <button type="button" class="btn btn-info btn-circle mx-1"  data-bs-toggle="modal" data-bs-target="#staticBackdrop" (click)="showData('', 'New')">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" >
+                    <div class="div" class="scrollbar" >
+                        
+                        <div class="table-responsive">
+                            <table class="table text-center scrollbar ">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Name/Code</th>
+                                        <th scope="col">Discount</th>
+                                        <th scope="col">Exp</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody> 
+                                    <tr  *ngFor="let c of coupons">
+                                        <td scope="row">{{c.name}}</td>
+                                        <td>
+                                            <span class="badge">{{c.discount}}%</span>
+                                            </td>
+                                        <td>{{c.exp | date: "medium"}}</td>
+                                        <td class="d-flex align-items-center justify-content-between">
+                                            <button type="button" class="btn btn-danger btn-circle mx-1"(click) = "delete(c.id)" >
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                            <button (click)="showData(c.id, 'Update')" type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-primary btn-circle mx-1" >
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                           
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-5 col-lg-5">
+            <div class="card shadow mb-4">
+                <!-- Card Header - Dropdown -->
+                <div
+                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                    <h6 class="m-0 font-weight-bold text-primary">Discount Product</h6>
+                    <div class="dropdown no-arrow">
+                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                            aria-labelledby="dropdownMenuLink">
+                            <div class="dropdown-header">Dropdown Header:</div>
+                            <a class="dropdown-item"  >New Tag</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Card Body -->
+                <div class="card-body" >
+                    <div class="div" class="scrollbar" >
+                        <ul class="list-group border border-0 " >
+                           
+                           </ul>
+                           
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
